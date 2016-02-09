@@ -5,7 +5,7 @@ console.log('hangmanGame loaded');
 // 1. var hg = new HangmanGame('supersecretword');
 // 2. hg.guess('t');
 var HangmanGame = function(secretWord, tries) {
-  this.secretWord = secretWord;
+  this.secretWord = secretWord || 'finish';
   this.guesses = [];
   this.triesRemaining = tries || 7;
   this.completedWord = this.wordSoFar();
@@ -20,7 +20,7 @@ HangmanGame.prototype.guess = function(newLetter) {
   } else {
     this.triesRemaining--;
   }
-  // only add unique letters 
+  // only add unique letters
   if (this.guesses.indexOf(newLetter) === -1) {
     this.guesses.push(newLetter);
   }

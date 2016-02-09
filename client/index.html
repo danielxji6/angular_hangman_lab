@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html data-ng-app="hangmanApp">
 
 <head>
   <title>Hangman Game</title>
@@ -16,7 +16,7 @@
 </head>
 
 <body class="full-background">
-<div class='container' id="container">
+<div class='container' id="container" data-ng-controller='hangmanController as hc'>
   <div id='poor-soul' class='row'>
     <pre class='col-md-6 col-md-offset-3'>
 _________
@@ -30,7 +30,7 @@ _________
 
     </pre>
     <div class='col-sm-12 col-md-6 col-md-offset-3 text-center'>
-      ??? tries remaining
+      {{hc.game.triesRemaining}} tries remaining
     </div>
   </div>
   <div class='row'>
@@ -38,7 +38,7 @@ _________
       <span class="label label-default">SOLVING:</span>
     </div>
     <div class='col-sm-12 text-center'>
-      <span class='wide'>_ng_l_r</span>
+      <span class='wide'>{{hc.game.completedWord}}</span>
     </div>
   </div>
 
@@ -46,20 +46,25 @@ _________
     <div class='col-sm-12 text-center'>
       <span class="label label-default">GUESSES:</span>
     </div>
-    <div class='col-sm-12 text-center' id='guesses'>['e', 'i', 'z', 'w']</div>
+    <div class='col-sm-12 text-center' id='guesses'>
+      <span>>:</span>
+      <spen  data-ng-repeat='g in hc.game.guesses'>{{g}}, </spen>
+    </div>
   </div>
 
   <div class='row'>
     <div class='col-sm-12 text-center'>
       <span class="label label-default">INPUT:</span>
     </div>
-    <div class="col-sm-12 text-center">
-      <input type='text' size='1' id='guess'>
-    </div>
+
+    <form class="col-sm-12 text-center" data-ng-submit="hc.makeGuess()">
+      <input type='text' size='1' maxlength='1' id='guess' data-ng-model="hc.newGuess">
+      <input hidden type="submit" id="submit" value="Submit" />
+    </form>
   </div>
   <div class='row' id='statuses'>
     <div class='col-sm-1 table small-font'>Controller:
-      <span class='glyphicon' data-ng-class="hangman.controllerWorks == true ? 'glyphicon-ok' : 'glyphicon-remove'"></span>
+      <span class='glyphicon' data-ng-class="hc.controllerWorks == true ? 'glyphicon-ok' : 'glyphicon-remove'"></span>
     </div>
   </div>
 </div>
